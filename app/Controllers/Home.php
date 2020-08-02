@@ -42,36 +42,56 @@ class Home extends BaseController
 
 	public function add(){
 
-		$data = array(
+		helper('form');  // gerkli
 
-			"title"=>$this->request->getpost("title")
+		$validate = $this->validate(array(
 
-		);
+			"title"=>"required"
 
-		$isAdding = $this->kategoriler->insert($data);
+		));
 
-		if ($isAdding) {
 
-			session()->setFlashdata('durum',array(
+		if ($validate) {
 
-				"type"=>"yes",
-				"message"=>"Kayıt Ekleme İşlemi Başarılı"
+			$data = array(
 
-			));
-			return redirect()->route('kategoriler');
+				"title"=>$this->request->getpost("title")
 
+			);
+
+			$isAdding = $this->kategoriler->insert($data);
+
+			if ($isAdding) {
+
+				session()->setFlashdata('durum',array(
+
+					"type"=>"yes",
+					"message"=>"Kayıt Ekleme İşlemi Başarılı"
+
+				));
+				return redirect()->route('kategoriler');
+
+
+			}else{
+
+				session()->setFlashdata('durum',array(
+
+					"type"=>"no",
+					"message"=>"Kayıt Ekleme İşlemi Başarısız"
+
+				));
+				return redirect()->route('kategoriler');
+
+			}
 
 		}else{
 
-			session()->setFlashdata('durum',array(
+			return view("kategori_ekle");
 
-				"type"=>"no",
-				"message"=>"Kayıt Ekleme İşlemi Başarısız"
-
-			));
-			return redirect()->route('kategoriler');
 
 		}
+
+		
 
 
 	}

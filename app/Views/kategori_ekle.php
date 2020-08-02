@@ -13,10 +13,21 @@
 
   <div class="container">
     <h2>Yeni Kategori Ekle</h2>
+
+    <?php
+
+    if ($_POST) {
+
+      echo \Config\Services::validation()->listErrors(); 
+
+    }
+
+    ?>
+
     <form method="POST" action="<?php echo base_url('kategoriler-ekle'); ?>">
       <div class="form-group">
         <label for="usr">Kategori Adı:</label>
-        <input type="text" name="title" class="form-control" id="usr" required="" placeholder="Kategori Adını Giriniz">
+        <input type="text" name="title" class="form-control" id="usr" placeholder="Kategori Adını Giriniz">
       </div>
 
       <div class="form-group">
